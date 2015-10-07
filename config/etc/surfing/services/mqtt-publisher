@@ -1,0 +1,6 @@
+name=MQTT Sensor Publisher
+class=org.surfthing.service.serial.SerialSensors
+interval=10000
+enabled=true
+
+mqtt.server=tcp://iot.eclipse.org:1883

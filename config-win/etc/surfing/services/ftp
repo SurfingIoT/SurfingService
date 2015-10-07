@@ -1,0 +1,11 @@
+name=FTP Services
+class=org.surfthing.service.ftp.FTPService
+interval=10000
+enabled=false
+ftp.server=189.2.102.60
+ftp.port=21
+ftp.user=nuxen
+ftp.password=tecno@123
+ftp.local.dir=v:/
+ftp.local.storage.dir=v:/
+ftp.remote.dir=/globalcode/update

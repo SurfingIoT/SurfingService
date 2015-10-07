@@ -1,0 +1,14 @@
+name=Camera Services
+class=org.surfthing.service.camera.Camera
+interval=0
+enabled=true
+
+#Para cameras USB no Linux
+#camera.time.format=hh:mm:ss
+#camera.picture.cmd=ffmpeg -f video4linux2 -i /dev/video0 -vframes 1 <filename>
+#camera.video.cmd=ffmpeg -f alsa -i default -f video4linux2 -i /dev/video0 -t <seconds> <filename>
+
+#Para camera do Raspberry Pi
+camera.time.format=long
+camera.picture.cmd=raspistill -t 1 -n -o <filename>
+camera.video.cmd=raspivid -t <seconds> -o <filename>

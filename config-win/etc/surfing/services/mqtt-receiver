@@ -1,0 +1,6 @@
+name=MQTT Listener
+class=org.surfthing.service.mqtt.Receiver
+interval=0
+enabled=true
+
+

@@ -1,0 +1,20 @@
+name=Serial Device Discovery
+class=org.surfthing.service.serial.DiscoveryService
+interval=1000
+enabled=true
+
+mqtt.integration=true
+mqtt.sensor.publisher.interval=5000
+
+port.sweeping=false
+#For linux we specify types os FT232, BT and Zigbee explorer ports...
+#ports=/dev/ttyUSB:/dev/ttyACM:/dev/ttyAMA:/dev/rfcomm
+#ports=COM
+#Enable port sweeping based on the list above
+#How many ports it will scan, /dev/ttyUSB0, /dev/ttyUSB1 until port.sweeping.max number
+port.sweeping.max=10
+#It will enable a thread to watch the specified directory and try to check if the name maches with ports
+#port.discovery.dir=/dev
+
+#Port scan mean that RXTX will use CommPortIdentifier.getPortIdentifiers() and trust in the returned ports by the API
+port.scan=true

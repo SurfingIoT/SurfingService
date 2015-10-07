@@ -1,0 +1,5 @@
+#Script Default
+echo Starting Surfing IoT Service
+nohup /home/pi/java/jdk1.8.0/bin/java -Djava.library.path=/usr/lib/jni -cp "$SURFING_HOME/target/Surfing-IoT-1.0-SNAPSHOT.jar:$SURFING_HOME/target/dependency/*" org.surfthing.Kernel > $SURFING_HOME/log/log.txt 2> $SURFING_HOME/log/errors.txt < /dev/null &
+PID=$!
+echo $PID > /var/run/surfing.pid

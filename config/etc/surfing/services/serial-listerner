@@ -1,0 +1,12 @@
+name=Serial Listener for MQTT and REST
+class=org.surfthing.service.serial.SerialListener
+interval=5000
+enabled=true
+
+mqtt.server=tcp://iot.eclipse.org:1883
+
+
+
+
+
+

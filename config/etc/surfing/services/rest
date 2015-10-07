@@ -1,0 +1,7 @@
+name=REST Services
+class=org.surfthing.service.rest.RESTService
+interval=0
+enabled=true
+
+port.number=8888
+
