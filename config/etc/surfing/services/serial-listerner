@@ -1,5 +1,5 @@
 name=Serial Listener for MQTT and REST
-class=org.surfthing.service.serial.SerialListener
+class=org.surfing.service.serial.SerialListener
 interval=5000
 enabled=true
 

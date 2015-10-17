@@ -1,5 +1,5 @@
 name=MQTT Sensor Publisher
-class=org.surfthing.service.mqtt.SensorPublisher
+class=org.surfing.service.mqtt.SensorPublisher
 interval=1000
 enabled=true
 

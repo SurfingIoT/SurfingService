@@ -1,5 +1,5 @@
 name=Remote Admin REST Services
-class=org.surfthing.service.admin.AdminREST
+class=org.surfing.service.admin.AdminREST
 #intervalo uma vez por dia
 interval=0
 enabled=true

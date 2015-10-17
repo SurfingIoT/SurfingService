@@ -1,5 +1,5 @@
 name=FTP Services
-class=org.surfthing.service.ftp.FTPService
+class=org.surfing.service.ftp.FTPService
 interval=10000
 enabled=false
 ftp.server=localhost

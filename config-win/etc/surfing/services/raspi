@@ -1,5 +1,5 @@
 name=Raspberry Pi Service
-class=org.surfthing.service.raspi.GPIOService
+class=org.surfing.service.raspi.GPIOService
 interval=0
 enabled=false
 

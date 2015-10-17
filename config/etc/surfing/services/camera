@@ -1,5 +1,5 @@
 name=Camera Services
-class=org.surfthing.service.camera.Camera
+class=org.surfing.service.camera.Camera
 interval=0
 enabled=true
 

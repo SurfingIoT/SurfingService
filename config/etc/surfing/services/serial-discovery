@@ -1,5 +1,5 @@
 name=Serial Device Discovery
-class=org.surfthing.service.serial.DiscoveryService
+class=org.surfing.service.serial.DiscoveryService
 interval=10000
 enabled=true
 
