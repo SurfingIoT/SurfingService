@@ -4,7 +4,7 @@ interval=10000
 enabled=true
 
 mqtt.integration=true
-mqtt.sensor.publisher.interval=5000
+mqtt.sensor.publisher.interval=15000
 
 port.sweeping=false
 #For linux we specify types os FT232, BT and Zigbee explorer ports...

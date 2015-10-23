@@ -123,6 +123,7 @@ public class DiscoveryService extends Service {
             scanPorts();
         }
     }
+
     public Collection<Device> scanPorts() {
 
         Collection<Device> devicesFound = new ArrayList<Device>();
@@ -169,22 +170,23 @@ public class DiscoveryService extends Service {
     }
 
     public synchronized void addSerialDevice(String name) {
+        Device discovered = null;
         try {
-            Device discovered = discoverySerial(name, DEFAULT_BAUD_RATE);
+            discovered = discoverySerial(name, DEFAULT_BAUD_RATE);
             if (discovered == null) {
                 Logger.getLogger(DiscoveryService.class.getName()).log(Level.INFO, "Device {0} has no discovery reponse!", name);
                 return;
             }
-            Kernel.getInstance().addDevice(discovered, name);
-            Kernel.getInstance().devices.add(discovered);
-            Logger.getLogger(DiscoveryService.class.getName()).log(Level.INFO, "New device discovered {0}", discovered.getName());
-            AudioTTS.speak(discovered.getName() + " pluged into " + Kernel.APP_NAME, true);
         } catch (Exception ex) {
             Logger.getLogger(DiscoveryService.class.getName()).log(Level.SEVERE, "Error add / discovering Serial Device {0}. {1}", new Object[]{name, ex.getMessage()});
             System.out.println("Closing " + name);
             kernel.close(name);
+            return;
         }
-
+        Kernel.getInstance().addDevice(discovered, name);
+        Kernel.getInstance().devices.add(discovered);
+        Logger.getLogger(DiscoveryService.class.getName()).log(Level.INFO, "New device discovered {0}", discovered.getName());
+        AudioTTS.speak(discovered.getName() + " pluged into " + Kernel.APP_NAME, true);
     }
 
     class DirObserver extends Thread {
@@ -249,6 +251,5 @@ public class DiscoveryService extends Service {
     public static boolean isSomethingValid(String name) {
         return name.contains(".conf") || name.contains("USB") || name.contains("rfcomm") || name.contains("ACM") || name.contains("AMA") || name.contains("COM");
     }
-
 
 }

@@ -34,7 +34,7 @@ public class SerialSensors extends MQTTBaseService {
                 //Logger.getLogger(SensorPublisher.class.getName()).log(Level.INFO,
                 //       "Reading sensors from " + device.getName() + ", sending " + requestString);
                 device.send("sensors");
-                Kernel.delay(740);
+                Kernel.delay(940);
                 String s = device.receive();
                 if (s != null && !s.equals("")) {
                     //Logger.getLogger(SensorPublisher.class.getName()).log(Level.INFO,
@@ -46,6 +46,12 @@ public class SerialSensors extends MQTTBaseService {
                     sendMessage(s, MQTT_QUEUE + "/" + device.getName());
                 }
             } catch (IOException ex) {
+                try {
+                    device.close();
+                } catch (IOException ex1) {
+                    Logger.getLogger(SerialSensors.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+                Kernel.getInstance().devices.remove(device);
                 Logger.getLogger(SerialSensors.class.getName()).log(Level.SEVERE, null, ex);
             } catch (MqttException ex) {
                 Logger.getLogger(SerialSensors.class.getName()).log(Level.SEVERE, null, ex);

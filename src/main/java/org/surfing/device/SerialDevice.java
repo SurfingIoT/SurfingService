@@ -122,7 +122,7 @@ public class SerialDevice implements Device, SerialPortEventListener {
             inputStream = serialPort.getInputStream();
             Logger.getLogger(SerialDevice.class.getName()).log(Level.INFO,
                     "Connection Stabilished with {0}", serialPort.getName());
-            Kernel.delay(1500);
+            Kernel.delay(2000);
         } catch (Exception e) {
             e.printStackTrace();
             Logger.getLogger(SerialDevice.class.getName()).log(Level.SEVERE,
@@ -135,6 +135,9 @@ public class SerialDevice implements Device, SerialPortEventListener {
     @Override
     public synchronized void discovery() throws Exception {
         //Those times are totally dependent with the kind of communication...
+        System.out.println("Cleaning initial data #1 " + receive());
+        System.out.println("Cleaning initial data #1 " + receive());
+        System.out.println("Cleaning initial data #1 " + receive());
         Kernel.delay(2000);
         for (int x = 0; x < DISCOVERY_RETRY; x++) {
             send("discovery");
