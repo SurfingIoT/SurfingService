@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.surfing;
+package org.surfing.kernel;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,6 +20,9 @@ import javax.inject.Inject;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.jboss.weld.environment.se.events.ContainerInitialized;
+import org.surfing.Device;
+import org.surfing.Service;
+import org.surfing.Thing;
 import org.surfing.service.camera.Camera;
 
 /**

@@ -1,5 +1,6 @@
 package org.surfing.service.serial;
 
+import org.surfing.device.SerialDevice;
 import gnu.io.CommPortIdentifier;
 
 /**

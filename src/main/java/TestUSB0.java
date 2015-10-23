@@ -6,9 +6,9 @@
 
 import java.io.IOException;
 import org.surfing.Device;
-import org.surfing.Kernel;
-import static org.surfing.Kernel.*;
-import org.surfing.service.serial.SerialDevice;
+import org.surfing.kernel.Kernel;
+import static org.surfing.kernel.Kernel.*;
+import org.surfing.device.SerialDevice;
 
 /**
  *

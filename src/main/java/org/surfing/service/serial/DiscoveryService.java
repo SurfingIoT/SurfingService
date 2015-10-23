@@ -5,6 +5,7 @@
  */
 package org.surfing.service.serial;
 
+import org.surfing.device.SerialDevice;
 import gnu.io.CommPortIdentifier;
 import java.io.File;
 import java.nio.file.FileSystems;
@@ -21,7 +22,7 @@ import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.surfing.Device;
-import org.surfing.Kernel;
+import org.surfing.kernel.Kernel;
 import org.surfing.Service;
 import org.surfing.service.audio.AudioTTS;
 

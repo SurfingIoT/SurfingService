@@ -15,7 +15,7 @@ import java.util.StringTokenizer;
 import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.surfing.Kernel;
+import org.surfing.kernel.Kernel;
 /**
  *
  * @author vsenger

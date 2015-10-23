@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.surfing.Device;
-import org.surfing.Kernel;
+import org.surfing.kernel.Kernel;
 import org.surfing.service.mqtt.MQTTBaseService;
 import org.surfing.service.rest.SensorManager;
 

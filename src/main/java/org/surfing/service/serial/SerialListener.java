@@ -13,7 +13,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import org.surfing.Device;
-import org.surfing.Kernel;
+import org.surfing.kernel.Kernel;
 import org.surfing.service.mqtt.MQTTController;
 
 /**

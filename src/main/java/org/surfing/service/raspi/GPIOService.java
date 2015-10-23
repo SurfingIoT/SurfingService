@@ -9,7 +9,7 @@ import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
-import org.surfing.Kernel;
+import org.surfing.kernel.Kernel;
 import org.surfing.Service;
 
 public final class GPIOService extends Service {

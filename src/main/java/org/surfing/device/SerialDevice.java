@@ -1,4 +1,4 @@
-package org.surfing.service.serial;
+package org.surfing.device;
 
 import org.surfing.Device;
 import gnu.io.CommPortIdentifier;
@@ -20,7 +20,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.surfing.Thing;
-import org.surfing.Kernel;
+import org.surfing.kernel.Kernel;
 
 /**
  *

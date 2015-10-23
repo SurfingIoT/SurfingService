@@ -10,7 +10,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Dsurfing.config="V:/IoT Surfboard/GIT/service/IoT-Surfing-Service/config/etc/surfing" -classpath %classpath org.surfing.Kernel -classpath %classpath org.surfthing.Kernel</exec.args>
+                <exec.args>-Dsurfing.config="V:/IoT Surfboard/GIT/service/IoT-Surfing-Service/config/etc/surfing" -classpath %classpath org.surfing.kernel.Kernel -classpath %classpath org.surfthing.Kernel</exec.args>
                 <exec.executable>java</exec.executable>
                 <exec.workingdir>V:\IoT Surfboard\GIT\service\IoT-Surfing-Service</exec.workingdir>
             </properties>
@@ -25,7 +25,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -Dsurfing.config="V:/IoT Surfboard/GIT/service/IoT-Surfing-Service/config/etc/surfing" -classpath %classpath org.surfing.Kernel -classpath %classpath org.surfthing.Kernel</exec.args>
+                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -Dsurfing.config="V:/IoT Surfboard/GIT/service/IoT-Surfing-Service/config/etc/surfing" -classpath %classpath org.surfing.kernel.Kernel -classpath %classpath org.surfthing.Kernel</exec.args>
                 <exec.executable>java</exec.executable>
                 <jpda.listen>true</jpda.listen>
                 <exec.workingdir>V:\IoT Surfboard\GIT\service\IoT-Surfing-Service</exec.workingdir>
@@ -41,7 +41,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Dsurfing.config="V:/IoT Surfboard/GIT/service/IoT-Surfing-Service/config/etc/surfing" -classpath %classpath org.surfing.Kernel -classpath %classpath org.surfthing.Kernel</exec.args>
+                <exec.args>-Dsurfing.config="V:/IoT Surfboard/GIT/service/IoT-Surfing-Service/config/etc/surfing" -classpath %classpath org.surfing.kernel.Kernel -classpath %classpath org.surfthing.Kernel</exec.args>
                 <exec.executable>java</exec.executable>
                 <exec.workingdir>V:\IoT Surfboard\GIT\service\IoT-Surfing-Service</exec.workingdir>
             </properties>

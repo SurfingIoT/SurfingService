@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import static org.surfing.Kernel.APP_NAME;
+import static org.surfing.kernel.Kernel.APP_NAME;
 import org.surfing.Service;
 
 /**

@@ -8,7 +8,7 @@ package org.surfing.service.mqtt;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.surfing.Kernel;
+import org.surfing.kernel.Kernel;
 
 /**
  *

@@ -57,7 +57,7 @@ public abstract class Service extends TimerTask {
     String name;
     String className;
 
-    void setInterval(long interval) {
+    public void setInterval(long interval) {
         this.interval=interval; 
     }
 

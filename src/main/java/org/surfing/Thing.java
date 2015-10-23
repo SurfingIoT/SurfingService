@@ -4,10 +4,10 @@
  */
 package org.surfing;
 
-import org.surfing.Kernel;
+import org.surfing.kernel.Kernel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.surfing.service.serial.SerialDevice;
+import org.surfing.device.SerialDevice;
 
 /**
  *

@@ -13,7 +13,7 @@ import javax.ws.rs.Produces;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.surfing.Device;
-import org.surfing.Kernel;
+import org.surfing.kernel.Kernel;
 import org.surfing.Service;
 import org.surfing.Thing;
 
