@@ -31,8 +31,8 @@ public class SerialSensors extends MQTTBaseService {
         }
         for (Device device : devices) {
             try {
-                //Logger.getLogger(SensorPublisher.class.getName()).log(Level.INFO,
-                //       "Reading sensors from " + device.getName() + ", sending " + requestString);
+                Logger.getLogger(SerialSensors.class.getName()).log(Level.INFO,
+                       "Reading sensors from " + device.getName() + ", sending " + requestString);
                 device.send("sensors");
                 Kernel.delay(940);
                 String s = device.receive();

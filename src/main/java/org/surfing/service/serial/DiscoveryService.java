@@ -38,8 +38,6 @@ public class DiscoveryService extends Service {
     public static boolean PORT_SWEEPING;
     public static boolean PORT_SCAN;
     private static int PORT_SWEEPING_MAX = 5; //with this discovery will be looking for ttyUSB0 .. ttyUSB9
-    public static boolean MQTT_INTEGRATION;
-    public static long MQTT_SENSOR_PUBLISHER_INTERVAL;
     public static int DEFAULT_BAUD_RATE = 9600;
     private boolean working;
     private ArrayList<String> serialPorts = new ArrayList<String>();
@@ -71,14 +69,8 @@ public class DiscoveryService extends Service {
         if (getConfig().getProperty("port.scan") != null) {
             PORT_SCAN = Boolean.parseBoolean(getConfig().getProperty("port.scan"));
         }
-        if (getConfig().getProperty("mqtt.integration") != null) {
-            MQTT_INTEGRATION = Boolean.parseBoolean(getConfig().getProperty("mqtt.integration"));
-        }
         if (getConfig().getProperty("baud.rate") != null) {
             DEFAULT_BAUD_RATE = Integer.parseInt(getConfig().getProperty("baud.rate"));
-        }
-        if (getConfig().getProperty("mqtt.sensor.publisher.interval") != null) {
-            MQTT_SENSOR_PUBLISHER_INTERVAL = Long.parseLong(getConfig().getProperty("mqtt.sensor.publisher.interval"));
         }
     }
 
@@ -184,7 +176,6 @@ public class DiscoveryService extends Service {
             return;
         }
         Kernel.getInstance().addDevice(discovered, name);
-        Kernel.getInstance().devices.add(discovered);
         Logger.getLogger(DiscoveryService.class.getName()).log(Level.INFO, "New device discovered {0}", discovered.getName());
         AudioTTS.speak(discovered.getName() + " pluged into " + Kernel.APP_NAME, true);
     }

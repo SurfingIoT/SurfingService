@@ -140,6 +140,7 @@ public class SerialDevice implements Device, SerialPortEventListener {
         System.out.println("Cleaning initial data #1 " + receive());
         Kernel.delay(2000);
         for (int x = 0; x < DISCOVERY_RETRY; x++) {
+            System.out.println("Discovery - try no." +(x+1));
             send("discovery");
             Kernel.delay(10);
 
@@ -177,11 +178,11 @@ public class SerialDevice implements Device, SerialPortEventListener {
                 Logger.getLogger(SerialDevice.class.getName()).log(Level.INFO,
                         "Empty Resource String - Nor a Thigns API device", resources);
             }
-            System.out.println("Delaying 2500 - try no." + x);
+
             Kernel.delay(2500);
 
         }
-        
+
     }
 
     public synchronized void send(char s) throws IOException {

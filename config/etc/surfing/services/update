@@ -4,10 +4,10 @@ class=org.surfing.service.admin.AdminREST
 interval=0
 enabled=true
 
-ftp.server=189.2.102.60
-ftp.port=21
-ftp.user=nuxen
-ftp.password=tecno@123
+ftp.server=
+ftp.port=
+ftp.user=
+ftp.password=
 
 ftp.local.dir=/home/pi/iMonitore/update
 ftp.remote.dir=/iMonitore/nuxen-device/update
