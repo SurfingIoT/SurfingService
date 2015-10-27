@@ -176,7 +176,7 @@ public class SerialDevice implements Device, SerialPortEventListener {
                 }
             } else {
                 Logger.getLogger(SerialDevice.class.getName()).log(Level.INFO,
-                        "Empty Resource String - Nor a Thigns API device", resources);
+                        "Empty Resource String - Nor a Surfboard Device...", resources);
             }
 
             Kernel.delay(2500);
