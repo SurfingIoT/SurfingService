@@ -142,7 +142,7 @@ public class SerialDevice implements Device, SerialPortEventListener {
         for (int x = 0; x < DISCOVERY_RETRY; x++) {
             System.out.println("Discovery - try no." +(x+1));
             send("discovery");
-            Kernel.delay(10);
+            //Kernel.delay(10);
 
             resources = receive();
 
