@@ -53,6 +53,8 @@ public abstract class MQTTBaseService extends Service {
             MqttMessage message = new MqttMessage();
             message.setPayload(msg.getBytes());
             client.publish(queue, message);
+            Logger.getLogger(MQTTBaseService.class.getName()).log(Level.INFO, "Message sent!");
+
         } catch (MqttException ex) {
             Logger.getLogger(MQTTBaseService.class.getName()).log(Level.SEVERE, "Error sending MQTT message " + ex.getMessage());
             try {
@@ -73,8 +75,12 @@ public abstract class MQTTBaseService extends Service {
         } catch (MqttException ex) {
         }
         String clientName = APP_NAME + "-" + ((int) (Math.random() * 3000) + 1);
+        Logger.getLogger(MQTTBaseService.class.getName()).log(Level.INFO, "Stablishing new MQTT Connection " + MQTT_SERVER);
+
         client = new MqttClient(MQTT_SERVER, clientName);
         client.connect();
+        Logger.getLogger(MQTTBaseService.class.getName()).log(Level.INFO, "Connection Stablished!");
+
     }
 
     public void close() throws MqttException {
@@ -103,6 +109,6 @@ public abstract class MQTTBaseService extends Service {
         client1.setCallback(null);
         client1.disconnect();
         client1.close();
-    }  
+    }
 
 }

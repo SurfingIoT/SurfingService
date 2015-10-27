@@ -125,7 +125,6 @@ public class DiscoveryService extends Service {
         Logger.getLogger(DiscoveryService.class.getName()).log(Level.INFO, "Starting scan port");
 
         portList = CommPortIdentifier.getPortIdentifiers();
-        Logger.getLogger(DiscoveryService.class.getName()).log(Level.INFO, "Ports to scan: " + (portList.hasMoreElements() ? "found!" : "not found!"));
         while (portList.hasMoreElements()) {
             boolean isListed = false;
             portId = (CommPortIdentifier) portList.nextElement();
