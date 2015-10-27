@@ -62,7 +62,7 @@ public class SerialListener extends MQTTController {
             String cmd = msg.substring(msg.indexOf("/") + 1, msg.length());
             if (deviceName != null && cmd != null) {
                 for (Device d : Kernel.getInstance().devices) {
-                    if (d.getName().equals("*") || d.getName().equals(deviceName)) {
+                    if (deviceName.equals("*") || d.getName().equals(deviceName)) {
                         try {
                             d.send(cmd);
                         } catch (IOException ex) {
