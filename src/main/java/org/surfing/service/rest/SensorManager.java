@@ -5,11 +5,14 @@
  */
 package org.surfing.service.rest;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.surfing.Device;
@@ -59,14 +62,23 @@ public class SensorManager extends Service {
             return;
         }
 
-        Iterator i = jsonObject.keySet().iterator();
-        //System.out.println("atualizando objetos");
+        JSONArray components = (JSONArray) jsonObject.get("components");
+
+        Iterator i = components.iterator();
         while (i.hasNext()) {
-            String thing = (String) i.next();
-            Object value = jsonObject.get(thing);
-            //System.out.println("Thing" + thing + " Value " + value);
-            found.getThings().get(thing).setLastValue(value.toString());
+            Object oo = i.next();
+            JSONObject joo = (JSONObject) oo;
+            String thing = joo.get("name").toString();
+            String value = joo.get("value").toString();
+            found.getThings().get(thing).setLastValue(value);
+
         }
+        /*Iterator i = jsonObject.keySet().iterator();
+         while (i.hasNext()) {
+         String thing = (String) i.next();
+         Object value = jsonObject.get(thing);
+         System.out.println("Thing" + thing + " Value " + value);
+         }*/
     }
 
     @Override

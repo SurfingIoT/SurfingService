@@ -1,0 +1,6 @@
+name=My Sensor Audio Service
+class=org.surfing.service.sample.MyService
+interval=0
+enabled=true
+mqtt.queue=globalcode/things/audio
+
