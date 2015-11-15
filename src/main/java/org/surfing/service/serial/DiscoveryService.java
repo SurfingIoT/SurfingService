@@ -42,7 +42,8 @@ public class DiscoveryService extends Service {
     private boolean working;
     private ArrayList<String> serialPorts = new ArrayList<String>();
     Thread dirObserver;
-
+    private ArrayList<String> portsFailed = new ArrayList<String>();
+    
     @Override
     public void start() {
         if (getConfig().getProperty("ports") != null) {
@@ -122,7 +123,7 @@ public class DiscoveryService extends Service {
 
         Enumeration portList;
         CommPortIdentifier portId;
-        Logger.getLogger(DiscoveryService.class.getName()).log(Level.INFO, "Starting scan port");
+        //Logger.getLogger(DiscoveryService.class.getName()).log(Level.INFO, "Starting scan port");
 
         portList = CommPortIdentifier.getPortIdentifiers();
         while (portList.hasMoreElements()) {
@@ -131,7 +132,7 @@ public class DiscoveryService extends Service {
             for (Device dd : Kernel.getInstance().getDevices()) {
                 isListed = dd.getPortName().equals(portId.getName());
             }
-            if (!isListed) {
+            if (!isListed && !portsFailed.contains(portId.getName())) {
                 Logger.getLogger(DiscoveryService.class.getName()).log(Level.INFO, "Scaning port: {0}", portId.getName());
 
                 if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
@@ -154,6 +155,7 @@ public class DiscoveryService extends Service {
         device.discovery();
         if (device.getResourceString() == null) {
             device.close();
+            portsFailed.add(serial);
             return null;
         } else {
             return device;

@@ -19,18 +19,14 @@ import org.surfing.service.mqtt.MQTTController;
  *
  * @author vsenger
  */
-@Path("/myservice")
-public class MyService extends MQTTController {
 
-    @GET
-    @Produces("text/html")
-    @Path("/s1/{name}")
-    public String execute(@PathParam("name") String name) {
-        System.out.println("Name " + name);
-        return "";
+public class MyService extends MQTTController {
+    public void start() {
+        super.start();
     }
 
     public void processMessage(String msg) {
+        System.out.println("MyService processing this message: " + msg);
         for (Device device : Kernel.getInstance().getDevices()) {
             Thing t = device.getThings().get(msg);
             if(t.getName().equals(msg)) {

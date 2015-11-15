@@ -3,3 +3,4 @@ class=org.surfing.service.mqtt.WatchDog
 interval=60000
 enabled=true
 mqtt.server=tcp://iot.eclipse.org:1883
+watchdog.queue=globalcode/things/admin

@@ -1,0 +1,17 @@
+OK - Problema no audio da fila myservice
+OK - Arduino Libs e exemplos do firmware
+
+
+- Node Red no Laptop de madeira
+- Configurar o Tasker
+
+
+- Finalizar e adaptar novamente o RealSense
+
+
+- Lista completa de comandos mqtt e REST
+  http://xxx:8888
+  ler dado do cache             -->     /data/device/sensor
+  ler dado do componente vivo   -->     /device/sensor
+  executar ao no componente     -->     /device/command/value
+

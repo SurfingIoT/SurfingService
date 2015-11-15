@@ -1,6 +1,6 @@
 package org.surfing.service.mqtt;
 
-import org.surfing.service.serial.SerialListener;
+import org.surfing.service.things.Manager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,7 +20,7 @@ import org.surfing.Service;
 public abstract class MQTTBaseService extends Service {
 
     public String MQTT_SERVER = "tcp://iot.eclipse.org:1883";
-    public String MQTT_QUEUE = "globalcode/things";
+    public String MQTT_QUEUE = null;
     public String LOG_QUEUE = MQTT_QUEUE + "/log";
 
     @Override
@@ -99,7 +99,7 @@ public abstract class MQTTBaseService extends Service {
     public void sendFileTesting(File file, String queue) throws MqttException, FileNotFoundException, IOException {
         MqttClient client1 = new MqttClient(MQTT_SERVER, APP_NAME + "-" + System.currentTimeMillis());
         client1.connect();
-        client1.setCallback(new SerialListener());
+        client1.setCallback(new Manager());
         MqttMessage message = new MqttMessage();
         FileInputStream f = new FileInputStream(file);
         byte pic[] = new byte[(int) file.length()];

@@ -275,7 +275,7 @@ public class SerialDevice implements Device, SerialPortEventListener {
         CommPortIdentifier portId;
 
         portList = CommPortIdentifier.getPortIdentifiers();
-        Logger.getLogger(SerialDevice.class.getName()).log(Level.INFO, "Starting scan port");
+        //Logger.getLogger(SerialDevice.class.getName()).log(Level.INFO, "Starting scan port");
         SerialPort serialPort = null;
         while (portList.hasMoreElements()) {
             portId = (CommPortIdentifier) portList.nextElement();

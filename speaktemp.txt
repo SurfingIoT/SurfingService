@@ -1,1 +1,1 @@
-temp value is 31.00
+temp value is 27.00

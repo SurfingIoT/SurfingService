@@ -16,7 +16,7 @@ import org.surfing.kernel.Kernel;
  */
 public class WatchDog extends MQTTBaseService {
 
-    public String WATCHDOG_QUEUE = MQTT_QUEUE + "/devices";
+    public String WATCHDOG_QUEUE = null;
 
     @Override
     public void start() {
@@ -39,7 +39,7 @@ public class WatchDog extends MQTTBaseService {
         try {
             //Watch Dog Actions
             sendMessage(Kernel.APP_NAME + " on "
-                    + horas + " hora(s) e " + minutos + " minuto(s)", MQTT_QUEUE + "/" + WATCHDOG_QUEUE);
+                    + horas + " hora(s) e " + minutos + " minuto(s)",  WATCHDOG_QUEUE);
         } catch (MqttException ex) {
             Logger.getLogger(MQTTBaseService.class.getName()).log(Level.SEVERE, "Failed to send watchdog message", ex);
         }

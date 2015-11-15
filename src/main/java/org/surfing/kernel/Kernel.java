@@ -35,8 +35,8 @@ public class Kernel {
     public Camera camera;
     
     //para uso em Java SE
-    public static String DEVICE_NAME = "Surfing IoT Gateway";
-    public static String APP_NAME = "Surfing IoT Gateway";
+    public static String DEVICE_NAME = "Surfing I.O.T. Gateway";
+    public static String APP_NAME = "Surfing I.O.T. Gateway";
     public static String SYSTEM_TYPE = "pc"; //pc //single-board //microcontroller
     public static boolean AUDIO_ENABLE = false;
 
