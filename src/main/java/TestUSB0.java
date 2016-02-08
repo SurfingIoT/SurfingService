@@ -18,9 +18,9 @@ public class TestUSB0 {
 
     public static void main(String[] args) throws IOException {
         System.out.println(System.getProperty("os.name"));
-        Device things = new SerialDevice("COM6", 115200);
+        Device things = new SerialDevice("COM11", 9600);
         things.open();
-        Kernel.delay(1500);
+        Kernel.delay(2500);
         things.send("sensors");
         Kernel.delay(740);
         String s = things.receive();

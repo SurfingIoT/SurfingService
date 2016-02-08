@@ -37,7 +37,7 @@ public class DiscoveryService extends Service {
     public static String PORT_DISCOVERY_DIR = "";
     public static boolean PORT_SWEEPING;
     public static boolean PORT_SCAN;
-    private static int PORT_SWEEPING_MAX = 5; //with this discovery will be looking for ttyUSB0 .. ttyUSB9
+    private static int PORT_SWEEPING_MAX = 30; //with this discovery will be looking for ttyUSB0 .. ttyUSB9
     public static int DEFAULT_BAUD_RATE = 9600;
     private boolean working;
     private ArrayList<String> serialPorts = new ArrayList<String>();

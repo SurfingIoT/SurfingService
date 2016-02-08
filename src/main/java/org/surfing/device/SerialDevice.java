@@ -34,7 +34,7 @@ public class SerialDevice implements Device, SerialPortEventListener {
     public void addEventListener() {
     }
     private Timer timer;
-    private static final int DEFAULT_BAUDRATE = 115200;
+    private static final int DEFAULT_BAUDRATE = 9600;
     final static int DISCOVERY_RETRY = 3;
     CommPortIdentifier portId;
     String portName;

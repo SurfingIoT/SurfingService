@@ -3,13 +3,13 @@ class=org.surfing.service.serial.DiscoveryService
 interval=10000
 enabled=true
 
-port.sweeping=false
+port.sweeping=true
 #For linux we specify types os FT232, BT and Zigbee explorer ports...
 #ports=/dev/ttyUSB:/dev/ttyACM:/dev/rfcomm
-#ports=COM
+#ports=COM20
 #Enable port sweeping based on the list above
 #How many ports it will scan, /dev/ttyUSB0, /dev/ttyUSB1 until port.sweeping.max number
-port.sweeping.max=10
+port.sweeping.max=30
 #It will enable a thread to watch the specified directory and try to check if the name maches with ports
 port.discovery.dir=/dev
 
