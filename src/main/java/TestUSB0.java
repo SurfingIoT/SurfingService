@@ -3,9 +3,11 @@
  * and open the template in the editor.
  */
 
-
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.surfing.Device;
+import org.surfing.device.IoTSurfboard;
 import org.surfing.kernel.Kernel;
 import static org.surfing.kernel.Kernel.*;
 import org.surfing.device.SerialDevice;
@@ -16,15 +18,45 @@ import org.surfing.device.SerialDevice;
  */
 public class TestUSB0 {
 
-    public static void main(String[] args) throws IOException {
-        System.out.println(System.getProperty("os.name"));
-        Device things = new SerialDevice("COM11", 9600);
+    public static void main(String[] args) {
+        IoTSurfboard board = null;
+        try {
+            board = new IoTSurfboard("COM3", 9600);
+            System.out.println("Alcohol      :" + board.alcohol());
+            System.out.println("Temperature  :" + board.temperature());
+            System.out.println("Humidity     :" + board.humidity());
+            System.out.println("Light        :" + board.light());
+            System.out.println("Potentiometer:" + board.potentiometer());
+            System.out.println("Light        :" + board.light());
+            board.red(255);
+            Kernel.delay(1000);
+            board.red(0);
+            Kernel.delay(1000);
+            board.green(255);
+            Kernel.delay(1000);
+            board.green(0);
+            Kernel.delay(1000);
+            board.blue(255);
+            Kernel.delay(1000);
+            board.blue(0);
+            Kernel.delay(1000);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                board.close();
+            } catch (IOException ex) {
+                Logger.getLogger(TestUSB0.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        /*Device things = new SerialDevice("COM3", 9600);
         things.open();
         Kernel.delay(2500);
         things.send("sensors");
         Kernel.delay(740);
         String s = things.receive();
-        System.out.println("Sensors: " + s);
+        System.out.println("Sensors: " + s);*/
         //things.send("/dev/ttyUSB0", "sl");
         //delay(3000);
         /*things.send("frente?5");
@@ -37,7 +69,7 @@ public class TestUSB0 {
 
          delay(1000);*/
 
-        /*String t;
+ /*String t;
          for (int x = 0; x < 100; x++) {
          things.send("light");
          delay(30);
@@ -73,6 +105,5 @@ public class TestUSB0 {
          t = things.receive();
          System.out.println("humidity " + t);
          }*/
-        things.close();
     }
 }

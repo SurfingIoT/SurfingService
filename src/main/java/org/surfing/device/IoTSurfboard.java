@@ -5,10 +5,105 @@
  */
 package org.surfing.device;
 
+import java.io.IOException;
+import org.surfing.Device;
+import org.surfing.kernel.Kernel;
+
 /**
  *
  * @author vinic_000
  */
 public class IoTSurfboard {
-    
+
+    Device board;
+
+    public IoTSurfboard(String port, int baudRate) throws IOException {
+        board = new SerialDevice(port, baudRate);
+        board.open();
+        Kernel.delay(2500);
+    }
+
+    public void close() throws IOException {
+        board.close();
+    }
+
+    public int alcohol() throws IOException {
+        board.send("alcohol");
+        Kernel.delay(100);
+        return Integer.parseInt(board.receive());
+    }
+
+    public int light() throws IOException {
+        board.send("light");
+        Kernel.delay(40);
+        return Integer.parseInt(board.receive());
+    }
+
+    public int potentiometer() throws IOException {
+        board.send("pot");
+        Kernel.delay(40);
+        return Integer.parseInt(board.receive());
+
+    }
+
+    public float temperature() throws IOException {
+        board.send("temp");
+        Kernel.delay(350);
+        return Float.parseFloat(board.receive());
+
+    }
+
+    public float humidity() throws IOException {
+        board.send("humidity");
+        Kernel.delay(350);
+        return Float.parseFloat(board.receive());
+    }
+
+    public void relay(boolean v) throws IOException {
+        board.send("relay?" + (v ? "1" : "0"));
+    }
+
+    public void speaker(boolean v) throws IOException {
+        board.send("speaker?" + (v ? "1" : "0"));
+
+    }
+
+    public void red(int p) throws IOException {
+        board.send("red?" + p);
+
+    }
+
+    public void green(int p) throws IOException {
+        board.send("green?" + p);
+
+    }
+
+    public void blue(int p) throws IOException {
+        board.send("blue?" + p);
+
+    }
+
+    public void rgb(int r, int g, int b) throws IOException {
+        this.red(r);
+        Kernel.delay(50);
+
+        this.green(g);
+        Kernel.delay(50);
+
+        this.blue(b);
+        Kernel.delay(50);
+
+    }
+
+    public void servo(int s) throws IOException {
+        board.send("servo?" + s);
+
+    }
+
+    public int distance() throws IOException {
+        board.send("distance");
+        Kernel.delay(150);
+        return Integer.parseInt(board.receive());
+
+    }
 }
