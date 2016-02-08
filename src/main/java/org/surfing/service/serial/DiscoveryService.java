@@ -43,7 +43,7 @@ public class DiscoveryService extends Service {
     private ArrayList<String> serialPorts = new ArrayList<String>();
     Thread dirObserver;
     private ArrayList<String> portsFailed = new ArrayList<String>();
-    
+
     @Override
     public void start() {
         if (getConfig().getProperty("ports") != null) {
@@ -178,7 +178,9 @@ public class DiscoveryService extends Service {
         }
         Kernel.getInstance().addDevice(discovered, name);
         Logger.getLogger(DiscoveryService.class.getName()).log(Level.INFO, "New device discovered {0}", discovered.getName());
-        AudioTTS.speak(discovered.getName() + " pluged into " + Kernel.APP_NAME, true);
+        if (Kernel.AUDIO_ENABLE) {
+            AudioTTS.speak(discovered.getName() + " pluged into " + Kernel.APP_NAME, true);
+        }
     }
 
     class DirObserver extends Thread {
