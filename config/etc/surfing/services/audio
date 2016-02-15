@@ -1,7 +1,7 @@
 name=Audio TTS Services
 class=org.surfing.service.audio.AudioTTS
 interval=0
-enabled=false
+enabled=true
 #speak.cmd=espeak -p10 -k5 -s150 -v en -f <filename>
 speak.cmd="c:\\Program Files (x86)\\eSpeak\\command_line\\espeak" -p10 -k5 -s150 -v en -f "<filename>"
 

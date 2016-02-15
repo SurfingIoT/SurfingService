@@ -18,7 +18,7 @@ public class IoTSurfboard {
     Device board;
 
     public IoTSurfboard(String port, int baudRate) throws IOException {
-        board = new SerialDevice(port, baudRate);
+        board = new SerialDeviceRXTX(port, baudRate);
         board.open();
         Kernel.delay(2500);
     }

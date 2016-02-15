@@ -5,7 +5,7 @@
  */
 package org.surfing.service.serial;
 
-import org.surfing.device.SerialDevice;
+import org.surfing.device.SerialDeviceRXTX;
 import gnu.io.CommPortIdentifier;
 import java.io.File;
 import java.nio.file.FileSystems;
@@ -149,8 +149,8 @@ public class DiscoveryService extends Service {
     }
 
     public synchronized Device discoverySerial(String serial, int baudRate) throws Exception {
-        SerialDevice device
-                = new SerialDevice(serial, baudRate);
+        SerialDeviceRXTX device
+                = new SerialDeviceRXTX(serial, baudRate);
         device.open();
         device.discovery();
         if (device.getResourceString() == null) {

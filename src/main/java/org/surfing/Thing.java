@@ -7,7 +7,7 @@ package org.surfing;
 import org.surfing.kernel.Kernel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.surfing.device.SerialDevice;
+import org.surfing.device.SerialDeviceRXTX;
 
 /**
  *
@@ -41,7 +41,7 @@ public class Thing {
     try {
       //System.out.println("Sending " + identifier);
       device.send(identifier);
-      if(device instanceof SerialDevice) Kernel.delay(40);
+      if(device instanceof SerialDeviceRXTX) Kernel.delay(40);
       //magic number, just don't change it. :) kkkk
       //DeviceUtil.delay((identifier.length()+2)*10);
       String r = device.receive();
@@ -59,7 +59,7 @@ public class Thing {
   public String execute(String args) throws Exception {
     device.send(identifier + "?" + args);
     //delay(20);
-    if(device instanceof SerialDevice) Kernel.delay(40);//era 30
+    if(device instanceof SerialDeviceRXTX) Kernel.delay(40);//era 30
 
     String r = device.receive();
     lastValue = r == null ? "" : r;

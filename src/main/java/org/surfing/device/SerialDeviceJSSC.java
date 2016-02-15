@@ -1,10 +1,7 @@
 package org.surfing.device;
 
 import org.surfing.Device;
-import gnu.io.CommPortIdentifier;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -19,6 +16,8 @@ import java.util.Timer;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jssc.SerialPort;
+import jssc.SerialPortException;
 import org.surfing.Thing;
 import org.surfing.kernel.Kernel;
 
@@ -26,8 +25,15 @@ import org.surfing.kernel.Kernel;
  *
  * @author vsenger
  */
-public class SerialDevice implements Device, SerialPortEventListener {
+public class SerialDeviceJSSC implements Device {
 
+    public static void main(String[] args) throws Exception {
+        SerialDeviceJSSC test = new SerialDeviceJSSC("COM4", 9600);
+        test.open();
+        test.send("discovery");
+        Kernel.delay(2000);
+        System.out.println(test.receive());
+    }
     byte buffer[] = new byte[255];
     int bufferCounter = 0;
 
@@ -36,10 +42,9 @@ public class SerialDevice implements Device, SerialPortEventListener {
     private Timer timer;
     private static final int DEFAULT_BAUDRATE = 9600;
     final static int DISCOVERY_RETRY = 3;
-    CommPortIdentifier portId;
     String portName;
     int baudRate;
-    SerialPort serialPort;
+    private SerialPort serialPort;
     OutputStream outputStream;
     InputStream inputStream;
     String resources;
@@ -50,14 +55,7 @@ public class SerialDevice implements Device, SerialPortEventListener {
     Collection<Thing> thingsList;
     private Vector<String> toSend = new Vector<String>();
 
-    public SerialDevice(CommPortIdentifier portId, int baudRate) {
-        this.portId = portId;
-        this.baudRate = baudRate;
-        things = new Hashtable<String, Thing>();
-        thingsList = new ArrayList<Thing>();
-    }
-
-    public SerialDevice(String portName, int baudRate) {
+    public SerialDeviceJSSC(String portName, int baudRate) {
         this.portName = portName;
         this.baudRate = baudRate;
         things = new Hashtable<String, Thing>();
@@ -71,8 +69,8 @@ public class SerialDevice implements Device, SerialPortEventListener {
 
     @Override
     public synchronized void close() throws IOException {
-        Logger.getLogger(SerialDevice.class.getName()).log(Level.INFO,
-                "Closing device on {0}", serialPort.getName());
+        Logger.getLogger(SerialDeviceJSSC.class.getName()).log(Level.INFO,
+                "Closing device on {0}", this.getPortName());
         //send("X");
         connected = false;
         try {
@@ -85,10 +83,9 @@ public class SerialDevice implements Device, SerialPortEventListener {
         }
         try {
             if (serialPort != null) {
-                System.out.println("Closing FINAL " + serialPort.getName() + " port");
-                serialPort.close();
-                System.out.println(portId.getCurrentOwner());
-
+                System.out.println("Closing FINAL " + serialPort.getPortName()
+                        + " port");
+                serialPort.closePort();
             }
         } catch (Exception e) {
         }
@@ -99,35 +96,26 @@ public class SerialDevice implements Device, SerialPortEventListener {
 
     public synchronized void open() throws IOException {
         try {
-            if (portName != null) {
-                portId
-                        = CommPortIdentifier.getPortIdentifier(portName);
-            }
-            if (portId == null) {
-                throw new IOException("Invalid port " + portName);
-            }
-            serialPort
-                    = (SerialPort) portId.open(portName, baudRate);
-            if (portId == null) {
-                throw new IOException("Invalid port " + portName);
-            }
+            serialPort = new SerialPort(portName);
 
-            serialPort.setSerialPortParams(baudRate,
-                    SerialPort.DATABITS_8,
-                    SerialPort.STOPBITS_1,
-                    SerialPort.PARITY_NONE);
-            serialPort.notifyOnOutputEmpty(true);
-
-            outputStream = serialPort.getOutputStream();
-            inputStream = serialPort.getInputStream();
-            Logger.getLogger(SerialDevice.class.getName()).log(Level.INFO,
-                    "Connection Stabilished with {0}", serialPort.getName());
+            if (serialPort.openPort()) {
+                serialPort.setParams(SerialPort.BAUDRATE_9600,
+                        SerialPort.DATABITS_8,
+                        SerialPort.STOPBITS_1,
+                        SerialPort.PARITY_NONE);
+            }
+            
+            Logger.getLogger(SerialDeviceJSSC.class.getName()).log(Level.INFO,
+                    "Connection Stabilished with {0}", serialPort.getPortName());
             Kernel.delay(2000);
         } catch (Exception e) {
-            e.printStackTrace();
-            Logger.getLogger(SerialDevice.class.getName()).log(Level.SEVERE,
-                    "Could not init the device on " + serialPort.getName(), e);
-            serialPort.close();
+            try {
+                Logger.getLogger(SerialDeviceJSSC.class.getName()).log(Level.SEVERE,
+                        "Could not init the device on " + serialPort.getPortName(), e);
+                serialPort.closePort();
+            } catch (SerialPortException ex) {
+                Logger.getLogger(SerialDeviceJSSC.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }
@@ -135,19 +123,21 @@ public class SerialDevice implements Device, SerialPortEventListener {
     @Override
     public synchronized void discovery() throws Exception {
         //Those times are totally dependent with the kind of communication...
-        System.out.println("Cleaning initial data #1 " + receive());
-        System.out.println("Cleaning initial data #1 " + receive());
-        System.out.println("Cleaning initial data #1 " + receive());
-        Kernel.delay(2000);
+        System.out.println("initial data #1 " + receive());
+        Kernel.delay(500);
+        System.out.println("initial data #2 " + receive());
+        Kernel.delay(500);
+        System.out.println("initial data #3 " + receive());
+        Kernel.delay(500);
         for (int x = 0; x < DISCOVERY_RETRY; x++) {
-            System.out.println("Discovery - try no." +(x+1));
+            System.out.println("Discovery - try no." + (x + 1));
             send("discovery");
             //Kernel.delay(10);
 
             resources = receive();
 
             if (resources != null) {
-                Logger.getLogger(SerialDevice.class.getName()).log(Level.INFO,
+                Logger.getLogger(SerialDeviceJSSC.class.getName()).log(Level.INFO,
                         "Compatible Device found! Resource String: {0}", resources);
                 things = new Hashtable<String, Thing>();
                 thingsList = new ArrayList<Thing>();
@@ -171,11 +161,11 @@ public class SerialDevice implements Device, SerialPortEventListener {
 
                     break;
                 } catch (Exception e) {
-                    Logger.getLogger(SerialDevice.class.getName()).log(Level.INFO,
+                    Logger.getLogger(SerialDeviceJSSC.class.getName()).log(Level.INFO,
                             "Wrong resource String. Parse error!", e);
                 }
             } else {
-                Logger.getLogger(SerialDevice.class.getName()).log(Level.INFO,
+                Logger.getLogger(SerialDeviceJSSC.class.getName()).log(Level.INFO,
                         "Empty Resource String - Nor a Surfboard Device...", resources);
             }
 
@@ -186,55 +176,49 @@ public class SerialDevice implements Device, SerialPortEventListener {
     }
 
     public synchronized void send(char s) throws IOException {
-
-        if (outputStream == null) {
-            Logger.getLogger(SerialDevice.class.getName()).log(Level.SEVERE,
+        if (serialPort == null) {
+            Logger.getLogger(SerialDeviceJSSC.class.getName()).log(Level.SEVERE,
                     "This device ({0}) is not working because IO objects are null. "
                     + "You should restart the device!", this.getName());
         } else {
-            outputStream.write(s);
-            outputStream.flush();
-
+            try {
+                serialPort.writeString("" + s);
+            } catch (SerialPortException ex) {
+                throw new IOException(ex);
+            }
         }
     }
 
     @Override
     public synchronized void send(String s) throws IOException {
-
-        if (outputStream == null) {
-            Logger.getLogger(SerialDevice.class.getName()).log(Level.SEVERE,
+        if (serialPort == null) {
+            Logger.getLogger(SerialDeviceJSSC.class.getName()).log(Level.SEVERE,
                     "This device ({0}) is not working because IO objects are null. "
                     + "You should restart the device!", this.getName());
         } else {
-            outputStream.write(s.getBytes());
-            outputStream.flush();
-
+            try {
+                serialPort.writeString(s);
+            } catch (SerialPortException ex) {
+                throw new IOException(ex);
+            }
         }
     }
 
     @Override
     public synchronized String receive() throws IOException {
-
-        if (inputStream == null) {
-            String msg = "This device (" + this.getName()
-                    + ") is not working because IO objects are null. "
-                    + "You should restart the device!";
-            Logger.getLogger(SerialDevice.class.getName()).log(Level.SEVERE, msg);
-            throw new IOException(msg);
+        String r = null;
+        if (serialPort == null) {
+            Logger.getLogger(SerialDeviceJSSC.class.getName()).log(Level.SEVERE,
+                    "This device ({0}) is not working because IO objects are null. "
+                    + "You should restart the device!", this.getName());
         } else {
-
-            int available = inputStream.available();
-            if (available == 0) {
-                //inputStream.close();
-                return null;
-            } else {
-                byte chunk[] = new byte[available];
-                inputStream.read(chunk, 0, available);
-                String retorno = new String(chunk);
-                inputStream.close();
-                return retorno;
+            try {
+                r = serialPort.readString();
+            } catch (SerialPortException ex) {
+                throw new IOException(ex);
             }
         }
+        return r;
     }
 
     @Override
@@ -259,7 +243,7 @@ public class SerialDevice implements Device, SerialPortEventListener {
 
     @Override
     public String getID() {
-        return this.portId.getName();
+        return this.serialPort.getPortName();
     }
 
     @Override
@@ -269,7 +253,7 @@ public class SerialDevice implements Device, SerialPortEventListener {
 
     public Collection<Device> scanPorts() {
 
-        Collection<Device> devicesFound = new ArrayList<Device>();
+        /*Collection<Device> devicesFound = new ArrayList<Device>();
 
         Enumeration portList;
         CommPortIdentifier portId;
@@ -279,36 +263,34 @@ public class SerialDevice implements Device, SerialPortEventListener {
         SerialPort serialPort = null;
         while (portList.hasMoreElements()) {
             portId = (CommPortIdentifier) portList.nextElement();
-            Logger.getLogger(SerialDevice.class.getName()).log(Level.INFO,
+            Logger.getLogger(SerialDeviceJSSC.class.getName()).log(Level.INFO,
                     "Scaning port: " + portId.getName());
 
             if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
-                Logger.getLogger(SerialDevice.class.getName()).log(Level.INFO,
+                Logger.getLogger(SerialDeviceJSSC.class.getName()).log(Level.INFO,
                         "Serial Device Port found " + portId.getName()
                         + ". Trying to discovery this device.");
                 try {
-                    /*serialPort =
-                     (SerialPort) portId.open(portId.getName(), 115200);
-                     Device device = new SerialDevice(serialPort);*/
-                    Device device = new SerialDevice(portId, DEFAULT_BAUDRATE);
+                    Device device = new SerialDeviceJSSC(portId, DEFAULT_BAUDRATE);
                     device.open();
                     device.discovery();
                     if (device.connected()) {
                         devicesFound.add(device);
                     } else {
-                        Logger.getLogger(SerialDevice.class.getName()).log(Level.INFO,
+                        Logger.getLogger(SerialDeviceJSSC.class.getName()).log(Level.INFO,
                                 "Serial Device is not Things API Compatible" + portId.getName());
                         device.close();
                     }
                     devicesFound.add(device);
                 } catch (Exception e) {
-                    Logger.getLogger(SerialDevice.class.getName()).log(Level.SEVERE,
+                    Logger.getLogger(SerialDeviceJSSC.class.getName()).log(Level.SEVERE,
                             "Couldn't connect to" + portId.getName());
                     e.printStackTrace();
                 }
             }
-        }
-        return devicesFound;
+        }*/
+        //return devicesFound;
+        return null;
     }
 
     public String getPortName() {
@@ -317,31 +299,6 @@ public class SerialDevice implements Device, SerialPortEventListener {
 
     public void setPortName(String portName) {
         this.portName = portName;
-    }
-
-    @Override
-    public void serialEvent(SerialPortEvent oEvent) {
-        if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
-            try {
-                int available = inputStream.available();
-                while (inputStream.available() > 0) {
-                    buffer[bufferCounter++] = (byte) inputStream.read();
-                    if (buffer[bufferCounter - 1] == '\n') {
-                        System.out.println(new String(buffer));
-                        //tratar();
-                    }
-                    if (bufferCounter > 255) {
-                        //resetBuffer();
-                    }
-                }
-
-                // Displayed results are codepage dependent
-            } catch (Exception e) {
-                System.err.println(e.toString());
-                e.printStackTrace();
-            }
-        }
-
     }
 
     @Override

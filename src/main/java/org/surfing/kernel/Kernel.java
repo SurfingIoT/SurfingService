@@ -23,7 +23,11 @@ import org.jboss.weld.environment.se.events.ContainerInitialized;
 import org.surfing.Device;
 import org.surfing.Service;
 import org.surfing.Thing;
+import org.surfing.device.SerialDeviceJSSC;
+import org.surfing.device.SerialDeviceRXTX;
+import org.surfing.service.audio.AudioTTS;
 import org.surfing.service.camera.Camera;
+import org.surfing.service.serial.DiscoveryService;
 
 /**
  *
@@ -33,13 +37,14 @@ public class Kernel {
 
     @Inject
     public Camera camera;
-    
+
     //para uso em Java SE
+    public static String SERIAL_API = "RXTX";
     public static String DEVICE_NAME = "Surfing I.O.T. Gateway";
     public static String APP_NAME = "Surfing I.O.T. Gateway";
     public static String SYSTEM_TYPE = "pc"; //pc //single-board //microcontroller
     public static boolean AUDIO_ENABLE = false;
-
+    public String startingPort;
     public static long SERIALDISCOVERY_INTERVAL = 5000;
 
     public static final long startTimeStamp = System.currentTimeMillis();
@@ -80,7 +85,7 @@ public class Kernel {
     public static void startWeld() {
         weld = new Weld();
         container = weld.initialize();
-
+        System.out.println("Weld initilized sucessful!");
     }
     public static Kernel instance;
 
@@ -92,12 +97,19 @@ public class Kernel {
         //fazer processo de restart automático (serviço?)
         //fazer processo de update automático (serviço?)
         startWeld();
+
         //Kernel k = new Kernel();
         //k.startWeld();
         //k.start();
         //System.out.println("Kernel Camera " + k.camera);
         instance = container.instance().select(Kernel.class).get();
-        instance.start();
+
+        if (args.length > 0) {
+            System.out.println("Starting IoT Surfboard with default Serial Port " + args[0]);
+            instance.start(args[0]);
+        } else {
+            instance.start();
+        }
         try {
             for (;;) {
                 Thread.sleep(60000);
@@ -120,11 +132,17 @@ public class Kernel {
         System.out.println("Event " + event);
     }
 
+    public void start(String serialPort) {
+        this.startingPort = serialPort;
+        start();
+    }
+
     public void start() {
         Properties prop = new Properties();
-
+        System.out.println("Starting Surfing Services...");
         //default /etc/surfing
         String path = System.getProperty("surfing.config", "/etc/surfing");
+        System.out.println("Surfing Service config path:" + path);
         try {
             prop.load(new FileInputStream(path + "/surfing.conf"));
         } catch (IOException ex) {
@@ -136,8 +154,12 @@ public class Kernel {
         if (prop.getProperty("system.type") != null) {
             SYSTEM_TYPE = prop.getProperty("system.type");
         }
+
         if (prop.getProperty("audio.enable") != null) {
             AUDIO_ENABLE = Boolean.parseBoolean(prop.getProperty("audio.enable"));
+        }
+        if (prop.getProperty("serial.api") != null) {
+            SERIAL_API = prop.getProperty("serial.api");
         }
         String servicesPath = System.getProperty("surfing.service.path", path + "/services");
         File servicesFile = new File(servicesPath);
@@ -145,7 +167,29 @@ public class Kernel {
             File servicesFiles[] = servicesFile.listFiles();
             initServices(servicesFiles);
         }
+        if (startingPort != null && !startingPort.equals("")) {
+            try {
+                Device d = null;
+                if (SERIAL_API.equals("RXTX")) {
+                    d = new SerialDeviceRXTX(startingPort, 9600);
+                } else if (SERIAL_API.equals("JSSC")) {
+                    d = new SerialDeviceJSSC(startingPort, 9600);
+                }
+                d.open();
+                Kernel.delay(1500);
+                d.discovery();
 
+                Kernel.getInstance().addDevice(d, startingPort);
+                Logger.getLogger(DiscoveryService.class.getName()).log(Level.INFO, "New device discovered {0}", d.getName());
+                if (Kernel.AUDIO_ENABLE) {
+                    AudioTTS.speak(d.getName() + " pluged into " + Kernel.APP_NAME, true);
+                }
+                addDevice(d, startingPort);
+            } catch (Exception ex) {
+                Logger.getLogger(Kernel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
     }
 
     private void initServices(File[] servicesFiles) {
@@ -159,25 +203,23 @@ public class Kernel {
                         || prop.getProperty("interval") == null || prop.getProperty("enabled") == null) {
                     Logger.getLogger(Kernel.class.getName()).log(Level.SEVERE, fileService.getName()
                             + " has invalid configuration for SurfThing Services, ignored.");
-                } else {
-                    if (Boolean.parseBoolean(prop.getProperty("enabled"))) {
-                        String serviceName = prop.getProperty("name");
-                        String serviceClass = prop.getProperty("class");
-                        long interval = Long.parseLong(prop.getProperty("interval"));
-                        Logger.getLogger(Kernel.class.getName()).log(Level.INFO, "Starting Service " + serviceName);
-                        Class cs = Class.forName(serviceClass);
-                        Logger.getLogger(Kernel.class.getName()).log(Level.INFO, "Service Class " + serviceClass + " loaded.");
-                        Service service = (Service) cs.newInstance();
-                        this.services.add(service);
-                        service.setClassName(serviceClass);
-                        service.setName(serviceName);
-                        service.setInterval(interval);
-                        service.setConfig(prop);
-                        service.start();
-                        if (interval > 0) {
-                            Timer timer = new Timer(false);
-                            timer.scheduleAtFixedRate(service, 0, interval);
-                        }
+                } else if (Boolean.parseBoolean(prop.getProperty("enabled"))) {
+                    String serviceName = prop.getProperty("name");
+                    String serviceClass = prop.getProperty("class");
+                    long interval = Long.parseLong(prop.getProperty("interval"));
+                    Logger.getLogger(Kernel.class.getName()).log(Level.INFO, "Starting Service " + serviceName);
+                    Class cs = Class.forName(serviceClass);
+                    Logger.getLogger(Kernel.class.getName()).log(Level.INFO, "Service Class " + serviceClass + " loaded.");
+                    Service service = (Service) cs.newInstance();
+                    this.services.add(service);
+                    service.setClassName(serviceClass);
+                    service.setName(serviceName);
+                    service.setInterval(interval);
+                    service.setConfig(prop);
+                    service.start();
+                    if (interval > 0) {
+                        Timer timer = new Timer(false);
+                        timer.scheduleAtFixedRate(service, 0, interval);
                     }
                 }
 

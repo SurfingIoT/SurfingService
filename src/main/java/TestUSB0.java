@@ -10,7 +10,7 @@ import org.surfing.Device;
 import org.surfing.device.IoTSurfboard;
 import org.surfing.kernel.Kernel;
 import static org.surfing.kernel.Kernel.*;
-import org.surfing.device.SerialDevice;
+import org.surfing.device.SerialDeviceRXTX;
 
 /**
  *

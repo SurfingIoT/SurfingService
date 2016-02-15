@@ -1,7 +1,7 @@
 name=Serial Device Discovery
 class=org.surfing.service.serial.DiscoveryService
 interval=10000
-enabled=true
+enabled=false
 
 port.sweeping=true
 #For linux we specify types os FT232, BT and Zigbee explorer ports...
