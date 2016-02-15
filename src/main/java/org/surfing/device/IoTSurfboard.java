@@ -18,7 +18,19 @@ public class IoTSurfboard {
     Device board;
 
     public IoTSurfboard(String port, int baudRate) throws IOException {
-        board = new SerialDeviceRXTX(port, baudRate);
+        board = new SerialDeviceJSSC(port, baudRate);
+        board.open();
+        Kernel.delay(2500);
+    }
+
+    public IoTSurfboard(String port, int baudRate, String API) throws IOException {
+        if (API.equals("RXTX")) {
+            board = new SerialDeviceRXTX(port, baudRate);
+        } else if (API.equals("JSSC")) {
+            board = new SerialDeviceJSSC(port, baudRate);
+        } else {
+            System.out.println("API Name not recognized!");
+        }
         board.open();
         Kernel.delay(2500);
     }
@@ -35,13 +47,13 @@ public class IoTSurfboard {
 
     public int light() throws IOException {
         board.send("light");
-        Kernel.delay(40);
+        Kernel.delay(100);
         return Integer.parseInt(board.receive());
     }
 
     public int potentiometer() throws IOException {
         board.send("pot");
-        Kernel.delay(40);
+        Kernel.delay(100);
         return Integer.parseInt(board.receive());
 
     }
@@ -57,6 +69,16 @@ public class IoTSurfboard {
         board.send("humidity");
         Kernel.delay(350);
         return Float.parseFloat(board.receive());
+    }
+
+    public void transistor(boolean v) throws IOException {
+        board.send("transistor?" + (v ? "1" : "0"));
+    }
+
+    public String clock() throws IOException {
+        board.send("clock");
+        Kernel.delay(100);
+        return board.receive();
     }
 
     public void relay(boolean v) throws IOException {

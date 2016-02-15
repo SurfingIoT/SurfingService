@@ -39,7 +39,7 @@ public class Kernel {
     public Camera camera;
 
     //para uso em Java SE
-    public static String SERIAL_API = "RXTX";
+    public static String SERIAL_API = "JSSC";
     public static String DEVICE_NAME = "Surfing I.O.T. Gateway";
     public static String APP_NAME = "Surfing I.O.T. Gateway";
     public static String SYSTEM_TYPE = "pc"; //pc //single-board //microcontroller

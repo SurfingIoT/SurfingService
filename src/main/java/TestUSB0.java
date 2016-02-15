@@ -21,26 +21,49 @@ public class TestUSB0 {
     public static void main(String[] args) {
         IoTSurfboard board = null;
         try {
-            board = new IoTSurfboard("COM3", 9600);
-            System.out.println("Alcohol      :" + board.alcohol());
-            System.out.println("Temperature  :" + board.temperature());
-            System.out.println("Humidity     :" + board.humidity());
-            System.out.println("Light        :" + board.light());
-            System.out.println("Potentiometer:" + board.potentiometer());
-            System.out.println("Light        :" + board.light());
-            board.red(255);
-            Kernel.delay(1000);
-            board.red(0);
-            Kernel.delay(1000);
-            board.green(255);
-            Kernel.delay(1000);
-            board.green(0);
-            Kernel.delay(1000);
-            board.blue(255);
-            Kernel.delay(1000);
-            board.blue(0);
-            Kernel.delay(1000);
-            
+            //by default it will use JSSC
+            board = new IoTSurfboard("COM4", 9600);
+            //to use RXTX
+            //board = new IoTSurfboard("COM5", 9600, "RXTX");
+            while (true) {
+                System.out.println("Alcohol      :" + board.alcohol());
+                System.out.println("Temperature  :" + board.temperature());
+                System.out.println("Humidity     :" + board.humidity());
+                System.out.println("Light        :" + board.light());
+                System.out.println("Potentiometer:" + board.potentiometer());
+                System.out.println("Clock        :" + board.clock());
+                System.out.println("Red Light");
+                board.red(255);
+                Kernel.delay(500);
+                board.red(0);
+                Kernel.delay(500);
+                System.out.println("Green Light");
+                board.green(255);
+                Kernel.delay(500);
+                board.green(0);
+                Kernel.delay(500);
+                System.out.println("Blue Light");
+                board.blue(255);
+                Kernel.delay(500);
+                board.blue(0);
+                Kernel.delay(500);
+                System.out.println("Transistor T1");
+                board.transistor(true);
+                Kernel.delay(500);
+                board.transistor(false);
+                Kernel.delay(500);
+                System.out.println("Relay");
+                board.relay(true);
+                Kernel.delay(500);
+                board.relay(false);
+                Kernel.delay(500);
+                System.out.println("Speaker");
+                board.speaker(true);
+                Kernel.delay(200);
+                board.speaker(false);
+                Kernel.delay(200);
+
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
