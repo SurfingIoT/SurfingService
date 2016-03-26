@@ -1,0 +1,8 @@
+C:\Users\Marcelo\OneDrive\Particular\Comunidades Tecnologia\IoT\IoTSurfboard\APIdotNet\GlobalCode.Surfing\GlobalCode.Surfing.Console\bin\Debug\GlobalCode.Surfing.Console.exe.config
+C:\Users\Marcelo\OneDrive\Particular\Comunidades Tecnologia\IoT\IoTSurfboard\APIdotNet\GlobalCode.Surfing\GlobalCode.Surfing.Console\bin\Debug\GlobalCode.Surfing.Console.exe
+C:\Users\Marcelo\OneDrive\Particular\Comunidades Tecnologia\IoT\IoTSurfboard\APIdotNet\GlobalCode.Surfing\GlobalCode.Surfing.Console\bin\Debug\GlobalCode.Surfing.Console.pdb
+C:\Users\Marcelo\OneDrive\Particular\Comunidades Tecnologia\IoT\IoTSurfboard\APIdotNet\GlobalCode.Surfing\GlobalCode.Surfing.Console\bin\Debug\GlobalCode.Surfing.dll
+C:\Users\Marcelo\OneDrive\Particular\Comunidades Tecnologia\IoT\IoTSurfboard\APIdotNet\GlobalCode.Surfing\GlobalCode.Surfing.Console\bin\Debug\GlobalCode.Surfing.pdb
+C:\Users\Marcelo\OneDrive\Particular\Comunidades Tecnologia\IoT\IoTSurfboard\APIdotNet\GlobalCode.Surfing\GlobalCode.Surfing.Console\obj\Debug\GlobalCode.Surfing.Console.csprojResolveAssemblyReference.cache
+C:\Users\Marcelo\OneDrive\Particular\Comunidades Tecnologia\IoT\IoTSurfboard\APIdotNet\GlobalCode.Surfing\GlobalCode.Surfing.Console\obj\Debug\GlobalCode.Surfing.Console.exe
+C:\Users\Marcelo\OneDrive\Particular\Comunidades Tecnologia\IoT\IoTSurfboard\APIdotNet\GlobalCode.Surfing\GlobalCode.Surfing.Console\obj\Debug\GlobalCode.Surfing.Console.pdb
