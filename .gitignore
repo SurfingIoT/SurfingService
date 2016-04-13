@@ -2,3 +2,6 @@
 hs_err_pid*
 .idea/
 iot-surfing-service.iml
+speaktemp.txt
+*.lck
+
