@@ -1,0 +1,1 @@
+java -classpath "target\iot-surfing-service-1.0-SNAPSHOT.jar;target\dependency\*" -Dsurfing.config="etc/config"  org.surfing.kernel.Kernel %1
