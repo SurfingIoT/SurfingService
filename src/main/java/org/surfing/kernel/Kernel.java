@@ -137,7 +137,7 @@ public class Kernel {
         start();
     }
 
-    public void start() {
+    public synchronized void start() {
         Properties prop = new Properties();
         System.out.println("Starting Surfing Services...");
         //default /etc/surfing
@@ -219,7 +219,7 @@ public class Kernel {
                     service.start();
                     if (interval > 0) {
                         Timer timer = new Timer(false);
-                        timer.scheduleAtFixedRate(service, 0, interval);
+                        timer.scheduleAtFixedRate(service, 5000, interval);
                     }
                 }
 
