@@ -33,7 +33,7 @@ public class Manager extends MQTTController {
     private final String requestString = "sensors";
 
     @Override
-    public void run() {
+    public synchronized void run() {
         Collection<Device> devices = Kernel.getInstance().getDevices();
         if (devices == null) {
             return;
