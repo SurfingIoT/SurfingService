@@ -9,7 +9,9 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.util.JSON;
 import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.logging.Level;
@@ -27,8 +29,8 @@ import org.surfing.Service;
 @Path("/persistence")
 public class Persistence extends Service {
 
-    MongoClient mongoClient;
-    DB db;
+    static MongoClient mongoClient;
+    static DB db;
     DBCollection coll;
 
     @GET
@@ -36,10 +38,10 @@ public class Persistence extends Service {
     @Path("/list/{collection}")
     public String update(@PathParam("collection") String collection) {
         DBCursor cursor = db.getCollection(collection).find();
-        String lazyReturn="<html><body>";
+        String lazyReturn = "<html><body>";
         try {
             while (cursor.hasNext()) {
-                lazyReturn+= "<p>"+ cursor.next() + "</p>";
+                lazyReturn += "<p>" + cursor.next() + "</p>";
             }
         } finally {
             cursor.close();
@@ -47,9 +49,19 @@ public class Persistence extends Service {
         lazyReturn += "</body></html>";
         return lazyReturn;
     }
-    
 
-    public void save(String key, String value, Date timestamp, String collection) {
+    public static void save(String json, String collectionName) {
+        DBCollection collection = db.getCollection(collectionName);
+
+        // convert JSON to DBObject directly
+        DBObject dbObject = (DBObject) JSON
+                .parse(json);
+
+        collection.insert(dbObject);
+
+    }
+
+    public static void save(String key, String value, Date timestamp, String collection) {
         BasicDBObject doc = new BasicDBObject(key, value)
                 .append("timestamp", timestamp.toString());
         db.getCollection(collection).insert(doc);
