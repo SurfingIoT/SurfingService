@@ -22,6 +22,7 @@ import org.surfing.Device;
 import org.surfing.Thing;
 import org.surfing.kernel.Kernel;
 import org.surfing.service.mqtt.MQTTController;
+import org.surfing.service.persistence.Persistence;
 
 /**
  *
@@ -53,6 +54,7 @@ public class Manager extends MQTTController {
                     } catch (Exception e) {
                     }
                     sendMessage(s, MQTT_QUEUE + "/" + device.getName());
+                    Persistence.save(s, "sensors");
                 }
             } catch (IOException ex) {
                 try {
