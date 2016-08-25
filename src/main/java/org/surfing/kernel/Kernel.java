@@ -184,7 +184,7 @@ public class Kernel {
                 if (Kernel.AUDIO_ENABLE) {
                     AudioTTS.speak(d.getName() + " pluged into " + Kernel.APP_NAME, true);
                 }
-                addDevice(d, startingPort);
+                //addDevice(d, startingPort);
             } catch (Exception ex) {
                 Logger.getLogger(Kernel.class.getName()).log(Level.SEVERE, null, ex);
             }
