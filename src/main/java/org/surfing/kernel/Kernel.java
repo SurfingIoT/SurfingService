@@ -148,11 +148,14 @@ public class Kernel {
         } catch (IOException ex) {
             Logger.getLogger(Kernel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (prop.getProperty("app.name") != null) {
-            APP_NAME = prop.getProperty("app.name");
+        if (prop.getProperty("device.name") != null) {
+            DEVICE_NAME = prop.getProperty("device.name");
         }
         if (prop.getProperty("system.type") != null) {
             SYSTEM_TYPE = prop.getProperty("system.type");
+        }
+        if (prop.getProperty("app.name") != null) {
+            APP_NAME = prop.getProperty("app.name");
         }
 
         if (prop.getProperty("audio.enable") != null) {
