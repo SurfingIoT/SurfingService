@@ -1,9 +1,17 @@
 #This service reads each <interval> the sensors, update the cache
+
 #and also provides all the data using REST / MQTT
+
 name=Things Manager with MQTT & REST
+
 class=org.surfing.service.things.Manager
-interval=5000
+
+interval=2000
+
 enabled=true
 
+
 mqtt.server=tcp://iot.eclipse.org:1883
-mqtt.queue=globalcode/things
+
+mqtt.queue.publish=/globalcode/things/sensors
+mqtt.queue.subscribe=/itau/daas/tcp/control

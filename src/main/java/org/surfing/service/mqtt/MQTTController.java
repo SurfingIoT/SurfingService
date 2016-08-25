@@ -32,8 +32,8 @@ public abstract class MQTTController extends MQTTBaseService implements MqttCall
         try {
             super.fixConnection();
             client.setCallback(this);
-            Logger.getLogger(MQTTController.class.getName()).log(Level.INFO, "MQTT Receiver Subscribing {0}", MQTT_QUEUE);
-            client.subscribe(MQTT_QUEUE);
+            Logger.getLogger(MQTTController.class.getName()).log(Level.INFO, "MQTT Receiver Subscribing {0}", MQTT_QUEUE_SUBSCRIBE);
+            client.subscribe(MQTT_QUEUE_SUBSCRIBE);
         } catch (MqttException ex) {
             Logger.getLogger(MQTTController.class.getName()).log(Level.SEVERE, null, ex);
         }

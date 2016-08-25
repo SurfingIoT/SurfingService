@@ -20,20 +20,19 @@ import org.surfing.Service;
 public abstract class MQTTBaseService extends Service {
 
     public String MQTT_SERVER = "tcp://iot.eclipse.org:1883";
-    public String MQTT_QUEUE = null;
-    public String LOG_QUEUE = MQTT_QUEUE + "/log";
+    public String MQTT_QUEUE_SUBSCRIBE = null;
+    public String MQTT_QUEUE_PUBLISH = null;
 
     @Override
     public void start() {
         if (getConfig().getProperty("mqtt.server") != null) {
             MQTT_SERVER = getConfig().getProperty("mqtt.server");
         }
-        if (getConfig().getProperty("mqtt.queue") != null) {
-            MQTT_QUEUE = getConfig().getProperty("mqtt.queue");
+        if (getConfig().getProperty("mqtt.queue.subscribe") != null) {
+            MQTT_QUEUE_SUBSCRIBE = getConfig().getProperty("mqtt.queue.subscribe");
         }
-
-        if (getConfig().getProperty("log.queue") != null) {
-            LOG_QUEUE = getConfig().getProperty("log.queue");
+        if (getConfig().getProperty("mqtt.queue.publish") != null) {
+            MQTT_QUEUE_PUBLISH = getConfig().getProperty("mqtt.queue.publish");
         }
 
     }
@@ -99,7 +98,7 @@ public abstract class MQTTBaseService extends Service {
     public void sendFileTesting(File file, String queue) throws MqttException, FileNotFoundException, IOException {
         MqttClient client1 = new MqttClient(MQTT_SERVER, APP_NAME + "-" + System.currentTimeMillis());
         client1.connect();
-        client1.setCallback(new Manager());
+        //client1.setCallback(new Manager());
         MqttMessage message = new MqttMessage();
         FileInputStream f = new FileInputStream(file);
         byte pic[] = new byte[(int) file.length()];

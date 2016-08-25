@@ -20,14 +20,14 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import org.surfing.Service;
+import org.surfing.service.mqtt.MQTTController;
 
 /**
  *
  * @author vsenger
  */
 @Path("/persistence")
-public class Persistence extends Service {
+public class Persistence extends MQTTController {
 
     static MongoClient mongoClient;
     static DB db;
@@ -51,14 +51,17 @@ public class Persistence extends Service {
     }
 
     public static void save(String json, String collectionName) {
-        DBCollection collection = db.getCollection(collectionName);
+        try {
+            DBCollection collection = db.getCollection(collectionName);
 
-        // convert JSON to DBObject directly
-        DBObject dbObject = (DBObject) JSON
-                .parse(json);
+            // convert JSON to DBObject directly
+            DBObject dbObject = (DBObject) JSON
+                    .parse(json);
 
-        collection.insert(dbObject);
+            collection.insert(dbObject);
+        } catch (Exception e) {
 
+        }
     }
 
     public static void save(String key, String value, Date timestamp, String collection) {
@@ -99,6 +102,11 @@ public class Persistence extends Service {
     @Override
     public void stop() {
         mongoClient.close();
+    }
+
+    @Override
+    public void processMessage(String msg) {
+
     }
 
 }

@@ -53,7 +53,7 @@ public class Manager extends MQTTController {
                         newSensorData(device.getName(), s);
                     } catch (Exception e) {
                     }
-                    sendMessage(s, MQTT_QUEUE + "/" + device.getName());
+                    sendMessage(s, MQTT_QUEUE_PUBLISH);
                     Persistence.save(s, "sensors");
                 }
             } catch (IOException ex) {
