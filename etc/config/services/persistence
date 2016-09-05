@@ -1,0 +1,10 @@
+name=MongoDB Persistence
+class=org.surfing.service.persistence.Persistence
+interval=10000
+enabled=true
+database.host=localhost
+database.name=DaaS-TCP
+mqtt.server=tcp://iot.eclipse.org:1883
+mqtt.queue.publish=/itau/daas/tcp/monitor
+mqtt.queue.subscribe=/itau/daas/persistence
+

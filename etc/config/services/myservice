@@ -2,4 +2,6 @@ name=My Sensor Audio Service
 class=org.surfing.service.sample.MyService
 interval=0
 enabled=true
-mqtt.queue=globalcode/audio
+mqtt.server=tcp://iot.eclipse.org:1883
+mqtt.queue.publish=/globalcode/things
+mqtt.queue.subscribe=/globalcode/audio

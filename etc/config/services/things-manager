@@ -14,4 +14,4 @@ enabled=true
 mqtt.server=tcp://iot.eclipse.org:1883
 
 mqtt.queue.publish=/globalcode/things/sensors
-mqtt.queue.subscribe=/itau/daas/tcp/control
+mqtt.queue.subscribe=/globalcode/things/control

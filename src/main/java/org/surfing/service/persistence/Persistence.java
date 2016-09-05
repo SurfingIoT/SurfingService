@@ -59,9 +59,10 @@ public class Persistence extends MQTTController {
                     .parse(json);
 
             collection.insert(dbObject);
-        } catch (Exception e) {
-
+        }catch(Exception e) {
+            System.out.println(e.getMessage());
         }
+
     }
 
     public static void save(String key, String value, Date timestamp, String collection) {

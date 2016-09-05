@@ -33,8 +33,9 @@ public class RESTService extends Service {
 
         try {
             DefaultResourceConfig resourceConfig = new DefaultResourceConfig(BasicService.class);
-            PackagesResourceConfig rc = new PackagesResourceConfig("org.surfing");
+            //PackagesResourceConfig rc = new PackagesResourceConfig("org.surfing");
             server = GrizzlyServerFactory.createHttpServer("http://0.0.0.0:" + PORT_NUMBER);
+            //server.setHeader("Access-Control-Allow-Origin", "*");
             server.start();
         } catch (IOException ex) {
             Logger.getLogger(RESTService.class.getName()).log(Level.SEVERE, "Can't start Jersey.", ex);
@@ -44,6 +45,7 @@ public class RESTService extends Service {
             Logger.getLogger(RESTService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     @Override
     public void stop() {
         server.stop();

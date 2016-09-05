@@ -1,0 +1,8 @@
+name=Dia de maldade
+class=br.com.itau.tcp.monitor.DiaDeMaldade
+interval=0
+enabled=true
+mqtt.queue=globalcode/audio
+mqtt.server=tcp://iot.eclipse.org:1883
+mqtt.queue.publish=/globalcode/things
+mqtt.queue.subscribe=/itau/maldade
