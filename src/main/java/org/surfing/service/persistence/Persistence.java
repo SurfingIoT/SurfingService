@@ -106,6 +106,8 @@ public class Persistence extends MQTTController {
 
     @Override
     public void processMessage(String msg) {
+        Logger.getLogger(Persistence.class.getName()).log(Level.INFO, "Saving data on " + DB_HOST);
+
         save(msg, DB_COLLECTION);
     }
 
