@@ -62,7 +62,6 @@ public abstract class MQTTController extends MQTTBaseService implements MqttCall
         if (msg == null) {
             return;
         }
-        Logger.getLogger(MQTTController.class.getName()).log(Level.INFO, "Message arrived!{0}", msg);
 
         processMessage(msg);
     }
