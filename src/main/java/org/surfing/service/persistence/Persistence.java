@@ -106,7 +106,7 @@ public class Persistence extends MQTTController {
 
     @Override
     public void processMessage(String msg) {
-        save(msg, "itg");
+        save(msg, DB_COLLECTION);
     }
 
     @Override
