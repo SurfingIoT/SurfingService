@@ -82,7 +82,7 @@ public class Persistence extends MQTTController {
 
     @Override
     public void start() {
-
+        super.start();
         if (getConfig().getProperty("database.name") != null) {
             DB_NAME = getConfig().getProperty("database.name");
         }
