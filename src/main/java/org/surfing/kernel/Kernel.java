@@ -141,7 +141,7 @@ public class Kernel {
         Properties prop = new Properties();
         System.out.println("Starting Surfing Services...");
         //default /etc/surfing
-        String path = System.getProperty("surfing.config", "/etc/surfing");
+        String path = System.getProperty("surfing.config", "etc/config");
         System.out.println("Surfing Service config path:" + path);
         try {
             prop.load(new FileInputStream(path + "/surfing.conf"));
