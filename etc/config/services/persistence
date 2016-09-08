@@ -4,6 +4,7 @@ interval=10000
 enabled=true
 database.host=localhost
 database.name=DaaS-TCP
+database.collection=itg
 mqtt.server=tcp://iot.eclipse.org:1883
 mqtt.queue.publish=/itau/daas/tcp/monitor
 mqtt.queue.subscribe=/itau/daas/persistence

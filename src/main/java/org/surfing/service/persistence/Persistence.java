@@ -59,7 +59,7 @@ public class Persistence extends MQTTController {
                     .parse(json);
 
             collection.insert(dbObject);
-        }catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
@@ -74,6 +74,7 @@ public class Persistence extends MQTTController {
     public static String DB_NAME = "surfing";
     public static String DB_HOST = "localhost";
     public static String DB_PORT = "";
+    public static String DB_COLLECTION = "";
 
     @Override
     public void run() {
@@ -88,6 +89,9 @@ public class Persistence extends MQTTController {
         if (getConfig().getProperty("database.host") != null) {
             DB_HOST = getConfig().getProperty("database.host");
         }
+        if (getConfig().getProperty("database.collection") != null) {
+            DB_COLLECTION = getConfig().getProperty("database.collection");
+        }
         if (getConfig().getProperty("database.host.port") != null) {
             DB_PORT = getConfig().getProperty("database.host.port");
         }
@@ -101,13 +105,13 @@ public class Persistence extends MQTTController {
     }
 
     @Override
-    public void stop() {
-        mongoClient.close();
+    public void processMessage(String msg) {
+        save(msg, "itg");
     }
 
     @Override
-    public void processMessage(String msg) {
-
+    public void stop() {
+        mongoClient.close();
     }
 
 }
